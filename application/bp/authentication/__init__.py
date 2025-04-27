@@ -16,11 +16,10 @@ def registration():
         form = RegisterForm()
 
         if form.validate_on_submit():
-            # Create a new user with form data
             new_user = User(
                 username=form.username.data,
                 email=form.email.data,
-                password=form.password.data  # You should hash the password in production!
+                password=form.password.data  # ⚡ remember: hash password in production!
             )
 
             db.session.add(new_user)
@@ -30,5 +29,3 @@ def registration():
             return redirect(url_for('authentication.dashboard'))
 
         return render_template('registration.html', form=form)
-
-
