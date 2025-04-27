@@ -12,6 +12,23 @@ def dashboard():
 
 @authentication.route('/registration', methods=['POST', 'GET'])
 def registration():
-    return
+    def registration():
+        form = RegisterForm()
+
+        if form.validate_on_submit():
+            # Create a new user with form data
+            new_user = User(
+                username=form.username.data,
+                email=form.email.data,
+                password=form.password.data  # You should hash the password in production!
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
+
+            flash('Registration successful!', 'success')
+            return redirect(url_for('authentication.dashboard'))
+
+        return render_template('registration.html', form=form)
 
 
